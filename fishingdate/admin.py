@@ -1,5 +1,5 @@
 from django.contrib import admin
-from shop.models import Category, Product, Article
+from fishingdate.models import Category, Product, Article
 
 
 class CategoryAdmin(admin.ModelAdmin):

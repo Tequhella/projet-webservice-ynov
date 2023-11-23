@@ -3,8 +3,8 @@ from django.db import models
 
 class User(models.Model):
 
-    lastname = models.CharField(max_lenght=255)
-    firstname = models.CharField(max_lenght=255)
+    lastname = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
     birthday = models.DateTimeField()
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
@@ -22,7 +22,7 @@ class User(models.Model):
     tradeRegisterNumber = models.CharField(max_length=255)
 
 
-class Notebook(models.model):
+class Notebook(models.Model):
 
     url = models.CharField(max_length=255)
     comment = models.CharField(1023)
