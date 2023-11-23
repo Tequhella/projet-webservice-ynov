@@ -73,7 +73,7 @@ class Excursion(models.Model):
 
 class Booking(models.Model):
     id_excursion = models.IntegerField()
-    date= models.DateTimeField()
+    date = models.DateTimeField()
     nb_booked_seats = models.IntegerField()
     total_price = models.DecimalField(max_digits=3, decimal_places=2)
     id_booker = models.IntegerField()

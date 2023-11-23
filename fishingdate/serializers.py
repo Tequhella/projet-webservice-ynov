@@ -18,7 +18,7 @@ class UserSerializer(ModelSerializer):
             'zipcode',
             'city',
             'languages',
-            'url',
+            'URLAvatar',
             'boatLicenseNumber',
             'insuranceNumber',
             'status',
@@ -35,7 +35,7 @@ class NotebookSerializer(ModelSerializer):
         model = Notebook
         fields = [
             'id',
-            'url',
+            'URLFish',
             'comment',
             'size',
             'weight',
@@ -55,9 +55,9 @@ class BoatSerializer(ModelSerializer):
             'name',
             'description',
             'brand',
-            'fabrication_year',
-            'url_boat_photo',
-            'boat_license_type',
+            'year',
+            'URLBoat',
+            'boatLicenseType',
             'boatType',
             'equipments',
             'deposit',
@@ -78,15 +78,15 @@ class ExcursionSerializer(ModelSerializer):
         model = Excursion
         fields = [
             'id',
-            'title',
+            'excursionTitle',
             'information',
-            'excursion_yype',
+            'excursionType',
             'tariff',
             'date_time_list',
-            'number_of_passengers',
-            'excursion_price',
-            'id_owner',
-            'id_boat',
+            'numberOfPassengers',
+            'excursionPrice',
+            'idOwner',
+            'idBoat',
             'user'
         ]
 
@@ -96,11 +96,11 @@ class BookingSerializer(ModelSerializer):
     class Meta:
         model = Booking
         fields = [
-            'id',
-            'id_excursion',
+            'idBooking',
+            'idExcursion',
             'date',
-            'nb_booked_seats',
-            'total_price',
-            'id_booker',
+            'nbBookedSeats',
+            'totalPrice',
+            'idBooker',
             'user'
         ]
