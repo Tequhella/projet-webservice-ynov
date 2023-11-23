@@ -1,4 +1,8 @@
 from django.db import models
+from typing import List
+from pydantic import (
+    BaseModel,
+)
 
 
 class User(models.Model):
@@ -21,8 +25,19 @@ class User(models.Model):
     siretNumber = models.IntegerField()
     tradeRegisterNumber = models.CharField(max_length=255)
 
-    boats = models.ForeignKey('fishingdate.Boat', on_delete=models.CASCADE, related_name='user')
-    fishingLogs = models.ForeignKey('fishingdate.FishingLog', on_delete=models.CASCADE, related_name='user')
+
+class Notebook(models.model):
+
+    url = models.CharField(max_length=255)
+    comment = models.CharField(1023)
+    size = models.DecimalField(decimal_places=1)
+    weight = models.DecimalField(decimal_places=3)
+    place = models.CharField(max_length=255)
+    date = models.DateTimeField()
+    released = models.BooleanField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='notebook')
+
 
 class Boat(models.Model):
 
@@ -43,4 +58,33 @@ class Boat(models.Model):
     motor = models.CharField(max_length=255)
     horsepower = models.IntegerField()
 
-    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boats')
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boatsList')
+
+
+class DateTimeList(BaseModel):
+    start_date: models.DateTimeField()
+    end_date: models.DateTimeField()
+
+
+class Excursion(models.Model):
+    title = models.CharField(max_length=255)
+    information = models.CharField(max_length=1023)
+    excursion_yype = models.CharField(max_length=255)
+    tariff = models.CharField(max_length=255)
+    date_time_list = List[DateTimeList]
+    number_of_passengers = models.IntegerField()
+    excursion_price = models.DecimalField(decimal_places=2)
+    id_owner = models.IntegerField()
+    id_boat = models.IntegerField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='fishingExcursionsList')
+
+
+class Booking(models.Model):
+    id_excursion = models.IntegerField()
+    date= models.DateTimeField()
+    nb_booked_seats = models.IntegerField()
+    total_price = models.DecimalField(decimal_places=2)
+    id_booker = models.IntegerField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='bookingsList')
