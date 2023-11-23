@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
-from fishingdate.models import User, Notebook, Boat, DateTimeList, Excursion, Booking
+from fishingdate.models import User, Notebook, Boat, Excursion, Booking
 
 UserModel = get_user_model()
 
@@ -131,7 +131,7 @@ class Command(BaseCommand):
             )
 
             for data_notebook in data_user['notebook']:
-                notebook = user.notebook.create(
+                user.notebook.create(
                     URLFish=data_notebook['URLFish'],
                     comment=data_notebook['comment'],
                     size=data_notebook['size'],
@@ -142,7 +142,7 @@ class Command(BaseCommand):
                 )
 
             for data_boat in data_user['boatsList']:
-                boat = user.boatsList.create(
+                user.boatsList.create(
                     name=data_boat['name'],
                     description=data_boat['description'],
                     brand=data_boat['brand'],
@@ -162,7 +162,7 @@ class Command(BaseCommand):
                 )
 
             for data_excursion in data_user['fishingExcursionsList']:
-                excursion = user.fishingExcursionsList.create(
+                user.fishingExcursionsList.create(
                     excursionTitle=data_excursion['excursionTitle'],
                     information=data_excursion['information'],
                     excursionType=data_excursion['excursionType'],
@@ -175,7 +175,7 @@ class Command(BaseCommand):
                 )
 
             for data_booking in data_user['bookingsList']:
-                booking = user.bookingsList.create(
+                user.bookingsList.create(
                     idExcursion=data_booking['idExcursion'],
                     date=data_booking['date'],
                     nbBookedSeats=data_booking['nbBookedSeats'],
