@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import User, Notebook, Boat, DateTimeList, Excursion, Booking
+from .models import User, Notebook, Boat, Excursion, Booking
 from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -25,9 +25,9 @@ class User(models.Model):
 class Notebook(models.Model):
 
     url = models.CharField(max_length=255)
-    comment = models.CharField(1023)
-    size = models.DecimalField(decimal_places=1)
-    weight = models.DecimalField(decimal_places=3)
+    comment = models.CharField(max_length=1023)
+    size = models.DecimalField(max_digits=1, decimal_places=1)
+    weight = models.DecimalField(max_digits=3, decimal_places=3)
     place = models.CharField(max_length=255)
     date = models.DateTimeField()
     released = models.BooleanField()
@@ -49,8 +49,8 @@ class Boat(models.Model):
     capacity = models.IntegerField()
     bedsNumber = models.IntegerField()
     harbor: models.CharField(max_length=255)
-    longitude = models.DecimalField()
-    latitude = models.DecimalField()
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
     motor = models.CharField(max_length=255)
     horsepower = models.IntegerField()
 
@@ -64,7 +64,7 @@ class Excursion(models.Model):
     tariff = models.CharField(max_length=255)
     date_time_list = models.JSONField()
     number_of_passengers = models.IntegerField()
-    excursion_price = models.DecimalField(decimal_places=2)
+    excursion_price = models.DecimalField(max_digits=3, decimal_places=2)
     id_owner = models.IntegerField()
     id_boat = models.IntegerField()
 
@@ -75,7 +75,7 @@ class Booking(models.Model):
     id_excursion = models.IntegerField()
     date= models.DateTimeField()
     nb_booked_seats = models.IntegerField()
-    total_price = models.DecimalField(decimal_places=2)
+    total_price = models.DecimalField(max_digits=3, decimal_places=2)
     id_booker = models.IntegerField()
 
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='bookingsList')
