@@ -1,48 +1,9 @@
 from django.db import models
+from typing import List
+from pydantic import (
+    BaseModel,
+)
 
-
-class Category(models.Model):
-
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    active = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-
-class Product(models.Model):
-
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    active = models.BooleanField(default=False)
-
-    category = models.ForeignKey('shop.Category', on_delete=models.CASCADE, related_name='products')
-
-    def __str__(self):
-        return self.name
-
-
-class Article(models.Model):
-
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    active = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
-
-    product = models.ForeignKey('shop.Product', on_delete=models.CASCADE, related_name='articles')
-
-    def __str__(self):
-        return self.name
 
 class User(models.Model):
 
@@ -60,10 +21,24 @@ class User(models.Model):
     insuranceNumber = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     companyName = models.CharField(max_length=255)
-    activity = models.CharField(max_length=1023)
+    activity = models.CharField(max_length=1025)
     siretNumber = models.IntegerField()
     tradeRegisterNumber = models.CharField(max_length=255)
-    
+
+
+class Notebook(models.model):
+
+    url = models.CharField(max_length=255)
+    comment = models.CharField(1023)
+    size = models.DecimalField(decimal_places=1)
+    weight = models.DecimalField(decimal_places=3)
+    place = models.CharField(max_length=255)
+    date = models.DateTimeField()
+    released = models.BooleanField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='notebook')
+
+
 class Boat(models.Model):
 
     name = models.CharField(max_length=255)
@@ -83,6 +58,33 @@ class Boat(models.Model):
     motor = models.CharField(max_length=255)
     horsepower = models.IntegerField()
 
-    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boats')
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boatsList')
 
 
+class DateTimeList(BaseModel):
+    start_date: models.DateTimeField()
+    end_date: models.DateTimeField()
+
+
+class Excursion(models.Model):
+    title = models.CharField(max_length=255)
+    information = models.CharField(max_length=1023)
+    excursion_yype = models.CharField(max_length=255)
+    tariff = models.CharField(max_length=255)
+    date_time_list = List[DateTimeList]
+    number_of_passengers = models.IntegerField()
+    excursion_price = models.DecimalField(decimal_places=2)
+    id_owner = models.IntegerField()
+    id_boat = models.IntegerField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='fishingExcursionsList')
+
+
+class Booking(models.Model):
+    id_excursion = models.IntegerField()
+    date= models.DateTimeField()
+    nb_booked_seats = models.IntegerField()
+    total_price = models.DecimalField(decimal_places=2)
+    id_booker = models.IntegerField()
+
+    user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='bookingsList')
