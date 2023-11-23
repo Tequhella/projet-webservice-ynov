@@ -2,6 +2,10 @@ from rest_framework import viewsets
 from .models import User, Notebook, Boat, Excursion, Booking
 from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer
 
+class NotebookViewSet(viewsets.ModelViewSet):
+    queryset = Notebook.objects.all()
+    serializer_class = NotebookSerializer
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -18,6 +22,4 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
-class NotebookViewSet(viewsets.ModelViewSet):
-    queryset = Notebook.objects.all()
-    serializer_class = NotebookSerializer
+    
