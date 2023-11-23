@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
-from shop.models import Category
+from fishingdate.models import User, Notebook, Boat, DateTimeList, Excursion, Booking
 
 UserModel = get_user_model()
 
@@ -107,18 +107,81 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write(self.style.MIGRATE_HEADING(self.help))
 
-        Category.objects.all().delete()
+        User.objects.all().delete()
 
-        for data_category in USERS:
-            category = Category.objects.create(name=data_category['name'],
-                                               active=data_category['active'])
-            for data_product in data_category['products']:
-                product = category.products.create(name=data_product['name'],
-                                                   active=data_product['active'])
-                for data_article in data_product['articles']:
-                    product.articles.create(name=data_article['name'],
-                                            active=data_article['active'],
-                                            price=data_article['price'])
+        for data_user in USERS:
+            user = User.objects.create(
+                lastname=data_user['lastname'],
+                firstname=data_user['firstname'],
+                birthday=data_user['birthday'],
+                email=data_user['email'],
+                phone=data_user['phone'],
+                address=data_user['address'],
+                zipcode=data_user['zipcode'],
+                city=data_user['city'],
+                languages=data_user['languages'],
+                URLAvatar=data_user['URLAvatar'],
+                boatLicenseNumber=data_user['boatLicenseNumber'],
+                insuranceNumber=data_user['insuranceNumber'],
+                status=data_user['status'],
+                companyName=data_user['companyName'],
+                activity=data_user['activity'],
+                siretNumber=data_user['siretNumber'],
+                tradeRegisterNumber=data_user['tradeRegisterNumber']
+            )
+
+            for data_notebook in data_user['notebook']:
+                notebook = user.notebook.create(
+                    URLFish=data_notebook['URLFish'],
+                    comment=data_notebook['comment'],
+                    size=data_notebook['size'],
+                    weight=data_notebook['weight'],
+                    place=data_notebook['place'],
+                    date=data_notebook['date'],
+                    released=data_notebook['released']
+                )
+
+            for data_boat in data_user['boatsList']:
+                boat = user.boatsList.create(
+                    name=data_boat['name'],
+                    description=data_boat['description'],
+                    brand=data_boat['brand'],
+                    year=data_boat['year'],
+                    URLBoat=data_boat['URLBoat'],
+                    boatLicenseType=data_boat['boatLicenseType'],
+                    boatType=data_boat['boatType'],
+                    equipments=data_boat['equipments'],
+                    deposit=data_boat['deposit'],
+                    capacity=data_boat['capacity'],
+                    bedsNumber=data_boat['bedsNumber'],
+                    harbor=data_boat['harbor'],
+                    longitude=data_boat['longitude'],
+                    latitude=data_boat['latitude'],
+                    motor=data_boat['motor'],
+                    horsepower=data_boat['horsepower']
+                )
+
+            for data_excursion in data_user['fishingExcursionsList']:
+                excursion = user.fishingExcursionsList.create(
+                    excursionTitle=data_excursion['excursionTitle'],
+                    information=data_excursion['information'],
+                    excursionType=data_excursion['excursionType'],
+                    tariff=data_excursion['tariff'],
+                    dateTimeList=data_excursion['dateTimeList'],
+                    numberOfPassengers=data_excursion['numberOfPassengers'],
+                    excursionPrice=data_excursion['excursionPrice'],
+                    idOwner=data_excursion['idOwner'],
+                    idBoat=data_excursion['idBoat']
+                )
+
+            for data_booking in data_user['bookingsList']:
+                booking = user.bookingsList.create(
+                    idExcursion=data_booking['idExcursion'],
+                    date=data_booking['date'],
+                    nbBookedSeats=data_booking['nbBookedSeats'],
+                    totalPrice=data_booking['totalPrice'],
+                    idBooker=data_booking['idBooker']
+                )
 
         UserModel.objects.create_superuser(ADMIN_ID, 'admin@oc.drf', ADMIN_PASSWORD)
 
