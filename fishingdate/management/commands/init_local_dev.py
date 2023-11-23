@@ -195,7 +195,7 @@ class Command(BaseCommand):
             )
 
             for data_notebook in data_user['notebook']:
-                user.notebook.create(
+                notebook = user.notebook.create(
                     URLFish=data_notebook['URLFish'],
                     comment=data_notebook['comment'],
                     size=data_notebook['size'],
@@ -206,7 +206,7 @@ class Command(BaseCommand):
                 )
 
             for data_boat in data_user['boatsList']:
-                user.boatsList.create(
+                boat = user.boatsList.create(
                     name=data_boat['name'],
                     description=data_boat['description'],
                     brand=data_boat['brand'],
@@ -226,7 +226,7 @@ class Command(BaseCommand):
                 )
 
             for data_excursion in data_user['fishingExcursionsList']:
-                user.fishingExcursionsList.create(
+                excursion = user.fishingExcursionsList.create(
                     excursionTitle=data_excursion['excursionTitle'],
                     information=data_excursion['information'],
                     excursionType=data_excursion['excursionType'],
@@ -239,7 +239,7 @@ class Command(BaseCommand):
                 )
 
             for data_booking in data_user['bookingsList']:
-                user.bookingsList.create(
+                booking = user.bookingsList.create(
                     idExcursion=data_booking['idExcursion'],
                     date=data_booking['date'],
                     nbBookedSeats=data_booking['nbBookedSeats'],
