@@ -48,7 +48,7 @@ class Boat(models.Model):
     deposit = models.IntegerField()
     capacity = models.IntegerField()
     bedsNumber = models.IntegerField()
-    harbor: models.CharField(max_length=255)
+    harbor = models.CharField(max_length=255)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     motor = models.CharField(max_length=255)
