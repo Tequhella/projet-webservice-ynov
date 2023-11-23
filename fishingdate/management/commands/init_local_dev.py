@@ -93,6 +93,70 @@ USERS = [
                 'idBooker': 2
             }
         ]
+    },
+{
+        'idUser': 2,
+        'lastname': 'Chardon',
+        'firstname': 'Lilian',
+        'birthday': '2000-05-19T00:45:00.000000Z',
+        'email': 'lilian.chardon@ynov.com',
+        'phone': "0707070707",
+        'address': '69 Maison du Plaisir',
+        'zipcode': '06600',
+        'city': 'Antibes',
+        'languages': [
+            'FR-fr'
+        ],
+        'URLAvatar': 'https://www.unicorn-fans.com/photos/5.png',
+        'boatLicenseNumber': 'F1BPLF62JJ69Q',
+        'insuranceNumber': '101695272243',
+        'status': 'Professionnel',
+        'companyName': 'Ynov',
+        'activity': 'Guide de pêche',
+        'siretNumber': 49685234100746,
+        'tradeRegisterNumber': 'SNK NICE D 998 254 576',
+        'notebook': [
+            {
+                'idPage': 1,
+                'URLFish': 'https://www.my-awesome-fish.fr/photos/9.png',
+                'comment': 'Le poisson est beau !',
+                'size': 25,
+                'weight': 0.95,
+                'place': 'Cagnes-Sur-Mer',
+                'date': '2023-06-12T13:37:12.000000Z',
+                'released': 'Oui'
+            }
+        ],
+        'boatsList': [],
+        'fishingExcursionsList': [
+            {
+                'idExcursion': 1,
+                'excursionTitle': 'À la recherche du Titanic !',
+                'information': 'Avis de recherche - Élu meilleur engin maritime de 2023',
+                'excursionType': 'Journalière',
+                'tariff': 'Par personne',
+                'dateTimeList': [
+                    {
+                        'startDate': '2023-06-12T10:00:00.000000Z',
+                        'endDate': '2023-06-20T18:00:00.000000Z'
+                    }
+                ],
+                'numberOfPassengers': 5,
+                'excursionPrice': 250000,
+                'idOwner': 2,
+                'idBoat': 1
+            }
+        ],
+        'bookingsList': [
+            {
+                'idBooking': 1,
+                'idExcursion': 1,
+                'date': '2023-06-12T10:00:00.000000Z',
+                'nbBookedSeats': 5,
+                'totalPrice': 1250000,
+                'idBooker': 2
+            }
+        ]
     }
 ]
 
