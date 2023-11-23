@@ -1,8 +1,4 @@
 from django.db import models
-from typing import List
-from pydantic import (
-    BaseModel,
-)
 
 
 class User(models.Model):
@@ -61,17 +57,12 @@ class Boat(models.Model):
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boatsList')
 
 
-class DateTimeList(BaseModel):
-    start_date: models.DateTimeField()
-    end_date: models.DateTimeField()
-
-
 class Excursion(models.Model):
     title = models.CharField(max_length=255)
     information = models.CharField(max_length=1023)
     excursion_yype = models.CharField(max_length=255)
     tariff = models.CharField(max_length=255)
-    date_time_list = List[DateTimeList]
+    date_time_list = models.JSONField()
     number_of_passengers = models.IntegerField()
     excursion_price = models.DecimalField(decimal_places=2)
     id_owner = models.IntegerField()
