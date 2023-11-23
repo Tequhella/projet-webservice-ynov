@@ -1,8 +1,11 @@
-from django.contrib import admin
+# urls.py
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from fishingdate.views import NotebookViewSet
+
+router = DefaultRouter()
+router.register(r'notebooks', NotebookViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('', include("fishinglog.urls")),
+    path('', include(router.urls)),
 ]
