@@ -21,6 +21,18 @@ class User(models.Model):
     siretNumber = models.IntegerField()
     tradeRegisterNumber = models.CharField(max_length=255)
 
+    def boatList(self):
+        return [{"id" : boat.id, "name" : boat.name} for boat in self.boatsList.all()]
+
+    def notebookPageList(self):
+        return [{"id" : page.id, "URLFish" : page.URLFish} for page in self.notebook.all()]
+
+    def excursionList(self):
+        return [{"id" : excursion.id, "excursionTitle" : excursion.excursionTitle} for excursion in self.fishingExcursionsList.all()]
+
+    def bookingList(self):
+        return [{"id" : booking.id, "date" : booking.date} for booking in self.bookingsList.all()]
+
 
 class Notebook(models.Model):
 
@@ -70,8 +82,8 @@ class Excursion(models.Model):
     excursionType = models.CharField(max_length=255)
     tariff = models.CharField(max_length=255)
 
-    def date_time_list(self):
-        return [(datetime_excursion.startDate, datetime_excursion.endDate) for datetime_excursion in
+    def dateList(self):
+        return [{"startDate" : datetime_excursion.startDate, "endDate" : datetime_excursion.endDate} for datetime_excursion in
                 self.dateTimeList.all()]
 
     numberOfPassengers = models.IntegerField()
