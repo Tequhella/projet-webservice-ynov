@@ -16,7 +16,7 @@ router.register('booking', BookingViewSet, basename='booking')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='obtain_tokens'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='obtain_tokens'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
     path('api/v1/', include(router.urls)),
 ]
