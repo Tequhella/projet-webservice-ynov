@@ -5,7 +5,7 @@ class User(models.Model):
 
     lastname = models.CharField(max_length=255)
     firstname = models.CharField(max_length=255)
-    birthday = models.DateTimeField()
+    birthday = models.DateTimeField(null=True)
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
@@ -17,8 +17,8 @@ class User(models.Model):
     insuranceNumber = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     companyName = models.CharField(max_length=255)
-    activity = models.CharField(max_length=1025)
-    siretNumber = models.IntegerField()
+    activity = models.CharField(max_length=1023)
+    siretNumber = models.IntegerField(null=True)
     tradeRegisterNumber = models.CharField(max_length=255)
 
     def boatList(self):
@@ -41,8 +41,8 @@ class Notebook(models.Model):
     size = models.DecimalField(max_digits=9, decimal_places=1)
     weight = models.DecimalField(max_digits=9, decimal_places=3)
     place = models.CharField(max_length=255)
-    date = models.DateTimeField()
-    released = models.BooleanField()
+    date = models.DateTimeField(null=True)
+    released = models.BooleanField(null=True)
 
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='notebook')
 
@@ -52,7 +52,7 @@ class Boat(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=1023)
     brand = models.CharField(max_length=255)
-    year = models.IntegerField()
+    year = models.IntegerField(null=True)
     URLBoat = models.CharField(max_length=255)
     boatLicenseType = models.CharField(max_length=255)
     boatType = models.CharField(max_length=255)
@@ -64,7 +64,7 @@ class Boat(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     motor = models.CharField(max_length=255)
-    horsepower = models.IntegerField()
+    horsepower = models.IntegerField(null=True)
 
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boatsList')
 
