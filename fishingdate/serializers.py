@@ -25,7 +25,11 @@ class UserSerializer(ModelSerializer):
             'companyName',
             'activity',
             'siretNumber',
-            'tradeRegisterNumber'
+            'tradeRegisterNumber',
+            'boatList',
+            'notebookPageList',
+            'excursionList',
+            'bookingList'
         ]
 
 
@@ -82,7 +86,7 @@ class ExcursionSerializer(ModelSerializer):
             'information',
             'excursionType',
             'tariff',
-            'date_time_list',
+            'dateList',
             'numberOfPassengers',
             'excursionPrice',
             'idBoat',

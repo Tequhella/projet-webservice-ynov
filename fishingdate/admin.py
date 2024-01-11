@@ -21,7 +21,11 @@ class UserAdmin(admin.ModelAdmin):
         'companyName',
         'activity',
         'siretNumber',
-        'tradeRegisterNumber'
+        'tradeRegisterNumber',
+        'boatList',
+        'notebookPageList',
+        'excursionList',
+        'bookingList'
     )
 
 
@@ -77,7 +81,7 @@ class ExcursionAdmin(admin.ModelAdmin):
         'information',
         'excursionType',
         'tariff',
-        'dateTimeList',
+        'dateList',
         'numberOfPassengers',
         'excursionPrice',
         'idBoat',
