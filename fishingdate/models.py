@@ -11,7 +11,7 @@ class User(models.Model):
     address = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    languages = models.JSONField(null=True)
+    languages = models.CharField(max_length=255)
     URLAvatar = models.CharField(max_length=255)
     boatLicenseNumber = models.CharField(max_length=255)
     insuranceNumber = models.CharField(max_length=255)
@@ -26,8 +26,8 @@ class Notebook(models.Model):
 
     URLFish = models.CharField(max_length=255)
     comment = models.CharField(max_length=1023)
-    size = models.DecimalField(max_digits=1, decimal_places=1)
-    weight = models.DecimalField(max_digits=3, decimal_places=3)
+    size = models.DecimalField(max_digits=9, decimal_places=1)
+    weight = models.DecimalField(max_digits=9, decimal_places=3)
     place = models.CharField(max_length=255)
     date = models.DateTimeField(null=True)
     released = models.BooleanField(null=True)
@@ -44,10 +44,10 @@ class Boat(models.Model):
     URLBoat = models.CharField(max_length=255)
     boatLicenseType = models.CharField(max_length=255)
     boatType = models.CharField(max_length=255)
-    equipments = models.JSONField(null=True)
-    deposit = models.IntegerField(null=True)
-    capacity = models.IntegerField(default=2)
-    bedsNumber = models.IntegerField(null=True)
+    equipments = models.CharField(max_length=255)
+    deposit = models.IntegerField()
+    capacity = models.IntegerField()
+    bedsNumber = models.IntegerField()
     harbor = models.CharField(max_length=255)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
@@ -57,25 +57,35 @@ class Boat(models.Model):
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='boatsList')
 
 
+class DateTimeExcursion(models.Model):
+    startDate = models.DateTimeField()
+    endDate = models.DateTimeField()
+
+    excursion = models.ForeignKey("fishingdate.Excursion", on_delete=models.CASCADE, related_name='dateTimeList')
+
+
 class Excursion(models.Model):
     excursionTitle = models.CharField(max_length=255)
     information = models.CharField(max_length=1023)
     excursionType = models.CharField(max_length=255)
     tariff = models.CharField(max_length=255)
-    dateTimeList = models.JSONField(null=True)
-    numberOfPassengers = models.IntegerField(null=True)
-    excursionPrice = models.DecimalField(max_digits=3, decimal_places=2)
-    idOwner = models.IntegerField(null=True)
-    idBoat = models.IntegerField(null=True)
+
+    def date_time_list(self):
+        return [(datetime_excursion.startDate, datetime_excursion.endDate) for datetime_excursion in
+                self.dateTimeList.all()]
+
+    numberOfPassengers = models.IntegerField()
+    excursionPrice = models.DecimalField(max_digits=9, decimal_places=2)
+    idBoat = models.IntegerField()
 
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='fishingExcursionsList')
 
 
 class Booking(models.Model):
-    idExcursion = models.IntegerField(null=True)
-    date = models.DateTimeField(null=True)
-    nbBookedSeats = models.IntegerField(null=True)
-    totalPrice = models.DecimalField(default=0, max_digits=3, decimal_places=2)
-    idBooker = models.IntegerField(null=True)
+    idExcursion = models.IntegerField()
+    date = models.DateTimeField()
+    nbBookedSeats = models.IntegerField()
+    totalPrice = models.DecimalField(max_digits=9, decimal_places=2)
 
     user = models.ForeignKey('fishingdate.User', on_delete=models.CASCADE, related_name='bookingsList')
+

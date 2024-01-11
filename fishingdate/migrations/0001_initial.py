@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('idUser', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('lastname', models.CharField(max_length=255)),
                 ('firstname', models.CharField(max_length=255)),
                 ('birthday', models.DateTimeField()),
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=255)),
                 ('zipcode', models.CharField(max_length=255)),
                 ('city', models.CharField(max_length=255)),
-                ('languages', models.JSONField()),
+                ('languages', models.CharField(max_length=255)),
                 ('url', models.CharField(max_length=255)),
                 ('boatLicenseNumber', models.CharField(max_length=255)),
                 ('insuranceNumber', models.CharField(max_length=255)),
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Notebook',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('idPage', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.CharField(max_length=255)),
                 ('comment', models.CharField(1023)),
                 ('size', models.DecimalField(decimal_places=1)),
@@ -52,15 +52,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Boat',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('idBoat', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.CharField(max_length=1023)),
                 ('brand', models.CharField(max_length=255)),
-                ('fabrication_year', models.IntegerField()),
-                ('url_boat_photo', models.CharField(max_length=255)),
-                ('boat_license_type', models.CharField(max_length=255)),
+                ('year', models.IntegerField()),
+                ('URLBoat', models.CharField(max_length=255)),
+                ('boatLicenseType', models.CharField(max_length=255)),
                 ('boatType', models.CharField(max_length=255)),
-                ('equipments', models.JSONField()),
+                ('equipments', models.CharField(max_length=255)),
                 ('deposit', models.IntegerField()),
                 ('capacity', models.IntegerField()),
                 ('bedsNumber', models.IntegerField()),
@@ -69,35 +69,42 @@ class Migration(migrations.Migration):
                 ('latitude', models.DecimalField()),
                 ('motor', models.CharField(max_length=255)),
                 ('horsepower', models.IntegerField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='boatsList', to='fishingdate.User')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='boatsList', to='fishingdate.user')),
             ],
         ),
         migrations.CreateModel(
             name='Excursion',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
+                ('idExcursion', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('excursionTitle', models.CharField(max_length=255)),
                 ('information', models.CharField(max_length=1023)),
-                ('excursion_yype', models.CharField(max_length=255)),
+                ('excursionType', models.CharField(max_length=255)),
                 ('tariff', models.CharField(max_length=255)),
-                ('date_time_list', models.JSONField()),
-                ('number_of_passengers', models.IntegerField()),
-                ('excursion_price', models.DecimalField(decimal_places=2)),
-                ('id_owner', models.IntegerField()),
-                ('id_boat', models.IntegerField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fishingExcursionsList', to='fishingdate.User')),
+                ('numberOfPassengers', models.IntegerField()),
+                ('excursionPrice', models.DecimalField(decimal_places=2)),
+                ('idOwner', models.IntegerField()),
+                ('idBoat', models.IntegerField()),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fishingExcursionsList', to='fishingdate.user')),
             ],
         ),
         migrations.CreateModel(
             name='Booking',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('id_excursion', models.IntegerField()),
+                ('idBooking', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('idExcursion', models.IntegerField()),
                 ('date', models.DateTimeField()),
-                ('nb_booked_seats', models.IntegerField()),
-                ('total_price', models.DecimalField(decimal_places=2)),
-                ('id_booker', models.IntegerField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookingsList', to='fishingdate.User')),
+                ('nbBookedSeats', models.IntegerField()),
+                ('totalPrice', models.DecimalField(decimal_places=2)),
+                ('idBooker', models.IntegerField()),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='bookingsList', to='fishingdate.user')),
             ],
         ),
+        migrations.CreateModel(
+            name='DateTimeList',
+            fields=[
+                ('startDate', models.DateTimeField()),
+                ('endDate', models.DateTimeField()),
+                ('excursion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='dateTimeList', to='fishingdate.user.excursion'))
+            ]
+        )
     ]
