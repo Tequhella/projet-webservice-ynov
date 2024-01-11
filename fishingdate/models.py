@@ -22,16 +22,16 @@ class User(models.Model):
     tradeRegisterNumber = models.CharField(max_length=255)
 
     def boatList(self):
-        return [{"id" : boat.id, "name" : boat.name} for boat in self.boatsList.all()]
+        return [{"id" : boat.id, "name" : boat.name} for boat in self.boatsList.all()] # type: ignore
 
     def notebookPageList(self):
-        return [{"id" : page.id, "URLFish" : page.URLFish} for page in self.notebook.all()]
+        return [{"id" : page.id, "URLFish" : page.URLFish} for page in self.notebook.all()] # type: ignore
 
     def excursionList(self):
-        return [{"id" : excursion.id, "excursionTitle" : excursion.excursionTitle} for excursion in self.fishingExcursionsList.all()]
+        return [{"id" : excursion.id, "excursionTitle" : excursion.excursionTitle} for excursion in self.fishingExcursionsList.all()] # type: ignore
 
     def bookingList(self):
-        return [{"id" : booking.id, "date" : booking.date} for booking in self.bookingsList.all()]
+        return [{"id" : booking.id, "date" : booking.date} for booking in self.bookingsList.all()] # type: ignore
 
 
 class Notebook(models.Model):
@@ -84,7 +84,7 @@ class Excursion(models.Model):
 
     def dateList(self):
         return [{"startDate" : datetime_excursion.startDate, "endDate" : datetime_excursion.endDate} for datetime_excursion in
-                self.dateTimeList.all()]
+                self.dateTimeList.all()] # type: ignore
 
     numberOfPassengers = models.IntegerField()
     excursionPrice = models.DecimalField(max_digits=9, decimal_places=2)
