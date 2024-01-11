@@ -1,5 +1,5 @@
 from django.contrib import admin
-from fishingdate.models import User, Notebook, Boat, Excursion, Booking
+from fishingdate.models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -80,7 +80,6 @@ class ExcursionAdmin(admin.ModelAdmin):
         'dateTimeList',
         'numberOfPassengers',
         'excursionPrice',
-        'idOwner',
         'idBoat',
         'user'
     )
@@ -97,7 +96,6 @@ class BookingAdmin(admin.ModelAdmin):
         'date',
         'nbBookedSeats',
         'totalPrice',
-        'idBooker',
         'user'
     )
 
@@ -106,8 +104,21 @@ class BookingAdmin(admin.ModelAdmin):
         return obj.bookingsList.user
 
 
+class DateTimeExcursionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'startDate',
+        'endDate'
+    )
+
+    @admin.display(description='Excursion')
+    def category(self, obj):
+        return obj.dateTimeList.fishingExcursionsList.user
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Notebook, NotebookAdmin)
 admin.site.register(Boat, BoatAdmin)
 admin.site.register(Excursion, ExcursionAdmin)
 admin.site.register(Booking, BookingAdmin)
+admin.site.register(DateTimeExcursion, DateTimeExcursionAdmin)
