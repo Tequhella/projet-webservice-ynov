@@ -11,6 +11,7 @@ router.register('boat', BoatViewSet, basename='boat')
 router.register('excursion', ExcursionViewSet, basename='excursion')
 router.register('booking', BookingViewSet, basename='booking')
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from fishingdate.models import User, Notebook, Boat, Excursion, Booking
+from fishingdate.models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
 
 
 class UserSerializer(ModelSerializer):
@@ -85,7 +85,6 @@ class ExcursionSerializer(ModelSerializer):
             'date_time_list',
             'numberOfPassengers',
             'excursionPrice',
-            'idOwner',
             'idBoat',
             'user'
         ]
@@ -96,11 +95,20 @@ class BookingSerializer(ModelSerializer):
     class Meta:
         model = Booking
         fields = [
-            'idBooking',
+            'id',
             'idExcursion',
             'date',
             'nbBookedSeats',
             'totalPrice',
-            'idBooker',
             'user'
+        ]
+
+
+class DateTimeExcursionSerializer(ModelSerializer):
+
+    class Meta:
+        model = DateTimeExcursion
+        fields = [
+            'startDate',
+            'endDate'
         ]

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import User, Notebook, Boat, Excursion, Booking
-from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer
+from .models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
+from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer, DateTimeExcursionSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,3 +26,8 @@ class BookingViewSet(viewsets.ModelViewSet):
 class NotebookViewSet(viewsets.ModelViewSet):
     queryset = Notebook.objects.all()
     serializer_class = NotebookSerializer
+
+
+class DateTimeListViewSet(viewsets.ModelViewSet):
+    queryset = DateTimeExcursion.objects.all()
+    serializer_class = DateTimeExcursionSerializer

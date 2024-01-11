@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
-from fishingdate.models import User, Notebook, Boat, Excursion, Booking
+from fishingdate.models import User
 
 UserModel = get_user_model()
 
@@ -16,10 +16,7 @@ USERS = [
         'address': '666 Maison du Diable',
         'zipcode': '83440',
         'city': 'Fayence',
-        'languages': [
-            'FR-fr',
-            'EN-uk'
-        ],
+        'languages': "FR-fr",
         'URLAvatar': 'https://www.my-sexy-pic.com/photos/69.png',
         'boatLicenseNumber': 'F4GJGF62JJ00K',
         'insuranceNumber': '001636272673',
@@ -50,10 +47,7 @@ USERS = [
                 'URLBoat': 'https://upload.wikimedia.org/wikipedia/en/thumb/1/13/Titan_submersible.jpg/300px-Titan_submersible.jpg',
                 'boatLicenseType': 'Côtier',
                 'boatType': 'Open',
-                'equipments': [
-                    'Sondeur',
-                    'GPS'
-                ],
+                'equipments': "Sondeur",
                 'deposit': 48000000,
                 'capacity': 5,
                 'bedsNumber': 5,
@@ -104,9 +98,7 @@ USERS = [
         'address': '69 Maison du Plaisir',
         'zipcode': '06600',
         'city': 'Antibes',
-        'languages': [
-            'FR-fr'
-        ],
+        'languages': 'FR-fr',
         'URLAvatar': 'https://www.unicorn-fans.com/photos/5.png',
         'boatLicenseNumber': 'F1BPLF62JJ69Q',
         'insuranceNumber': '101695272243',
@@ -195,7 +187,7 @@ class Command(BaseCommand):
             )
 
             for data_notebook in data_user['notebook']:
-                notebook = user.notebook.create(
+                user.notebook.create(
                     URLFish=data_notebook['URLFish'],
                     comment=data_notebook['comment'],
                     size=data_notebook['size'],
@@ -206,7 +198,7 @@ class Command(BaseCommand):
                 )
 
             for data_boat in data_user['boatsList']:
-                boat = user.boatsList.create(
+                user.boatsList.create(
                     name=data_boat['name'],
                     description=data_boat['description'],
                     brand=data_boat['brand'],
@@ -226,20 +218,25 @@ class Command(BaseCommand):
                 )
 
             for data_excursion in data_user['fishingExcursionsList']:
-                excursion = user.fishingExcursionsList.create(
+                user.fishingExcursionsList.create(
                     excursionTitle=data_excursion['excursionTitle'],
                     information=data_excursion['information'],
                     excursionType=data_excursion['excursionType'],
                     tariff=data_excursion['tariff'],
-                    dateTimeList=data_excursion['dateTimeList'],
                     numberOfPassengers=data_excursion['numberOfPassengers'],
                     excursionPrice=data_excursion['excursionPrice'],
                     idOwner=data_excursion['idOwner'],
                     idBoat=data_excursion['idBoat']
                 )
 
+                for data_dateTimeList in data_excursion['dateTimeList']:
+                    user.fishingExcursionsList.dateTimeList.create(
+                        startDate=data_dateTimeList['startDate'],
+                        endDAte=data_dateTimeList['endDate']
+                    )
+
             for data_booking in data_user['bookingsList']:
-                booking = user.bookingsList.create(
+                user.bookingsList.create(
                     idExcursion=data_booking['idExcursion'],
                     date=data_booking['date'],
                     nbBookedSeats=data_booking['nbBookedSeats'],
