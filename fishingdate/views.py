@@ -16,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
         zipcode = self.request.GET.get('zipcode')
         if zipcode is not None:
             queryset = queryset.filter(zipcode=zipcode)
+        
         return queryset
 
     #permission_classes = [IsAuthenticated]
@@ -30,6 +31,13 @@ class BoatViewSet(viewsets.ModelViewSet):
         name = self.request.GET.get('name')
         if name is not None:
             queryset = queryset.filter(name=name)
+        longitude1 = self.request.GET.get('longitude1')
+        longitude2 = self.request.GET.get('longitude2')
+        latitude1 = self.request.GET.get('latitude1')
+        latitude2 = self.request.GET.get('latitude2')
+        if longitude1 is not None and longitude2 is not None and latitude1 is not None and latitude2 is not None :
+            queryset = queryset.filter(longitude__range=(longitude1, longitude2))
+            queryset = queryset.filter(latitude__range=(latitude1, latitude2))
         return queryset
     
     #permission_classes = [IsAuthenticated]
