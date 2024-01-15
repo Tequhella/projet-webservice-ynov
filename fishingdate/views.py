@@ -2,6 +2,8 @@ from multiprocessing.managers import BaseManager
 import numbers
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
 from .models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
 from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer, DateTimeExcursionSerializer
 
@@ -42,6 +44,23 @@ class BoatViewSet(viewsets.ModelViewSet):
     
     #permission_classes = [IsAuthenticated]
 
+    def create(self, request, *args, **kwargs):
+        owner_id = request.data.get('user')
+        try:
+            user = User.objects.get(pk=owner_id)
+            if user.boatLicenseNumber is None:
+                return Response(
+                    {'error': 'User must have a boat License number to create an boat.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except User.DoesNotExist:
+            return Response(
+                {'error': 'User with provided ID does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return super().create(request, *args, **kwargs)
+    
 
 class ExcursionViewSet(viewsets.ModelViewSet):
     queryset = Excursion.objects.all()
@@ -56,6 +75,23 @@ class ExcursionViewSet(viewsets.ModelViewSet):
     
     #permission_classes = [IsAuthenticated]
 
+    def create(self, request, *args, **kwargs):
+        boat_owner_id = request.data.get('user')
+        try:
+            user = User.objects.get(pk=boat_owner_id)
+            if not user.boatsList.exists():
+                return Response(
+                    {'error': 'User must have at least one boat to create an excursion.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        except User.DoesNotExist:
+            return Response(
+                {'error': 'User with provided ID does not exist.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return super().create(request, *args, **kwargs)
+    
 
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
