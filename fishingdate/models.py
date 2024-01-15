@@ -13,7 +13,7 @@ class User(models.Model):
     city = models.CharField(max_length=255)
     languages = models.CharField(max_length=255)
     URLAvatar = models.CharField(max_length=255)
-    boatLicenseNumber = models.CharField(max_length=255)
+    boatLicenseNumber = models.CharField(max_length=255, null=True)
     insuranceNumber = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     companyName = models.CharField(max_length=255)
