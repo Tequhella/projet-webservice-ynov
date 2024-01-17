@@ -3,27 +3,44 @@ from django.db import models
 
 class User(models.Model):
     """
-    Represents a user in the system.
+    Represents a user.
 
     Attributes:
-        lastname (str): The last name of the user.
-        firstname (str): The first name of the user.
-        birthday (datetime): The birthday of the user.
-        email (str): The email address of the user.
-        phone (str): The phone number of the user.
-        address (str): The address of the user.
-        zipcode (str): The ZIP code of the user.
-        city (str): The city of the user.
-        languages (str): The languages spoken by the user.
+        lastname (str): The user's last name.
+        firstname (str): The user's first name.
+        birthday (DateTimeField): The user's birthday.
+        email (str): The user's email address.
+        phone (str): The user's phone number.
+        address (str): The user's address.
+        zipcode (str): The user's zipcode.
+        city (str): The user's city.
+        languages (str): The user's spoken languages.
         URLAvatar (str): The URL of the user's avatar.
-        boatLicenseNumber (str): The boat license number of the user.
-        insuranceNumber (str): The insurance number of the user.
-        status (str): The status of the user.
-        companyName (str): The name of the user's company.
-        activity (str): The activity of the user's company.
-        siretNumber (int): The SIRET number of the user's company.
-        tradeRegisterNumber (str): The trade register number of the user's company.
+        boatLicenseNumber (str): The user's boat license number.
+        insuranceNumber (str): The user's insurance number.
+        status (str): The user's status.
+        companyName (str): The user's company name.
+        activity (str): The user's activity.
+        siretNumber (int): The user's SIRET number.
+        tradeRegisterNumber (str): The user's trade register number.
     """
+    lastname = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
+    birthday = models.DateTimeField(null=True)
+    email = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    zipcode = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    languages = models.CharField(max_length=255)
+    URLAvatar = models.CharField(max_length=255)
+    boatLicenseNumber = models.CharField(max_length=255, null=True)
+    insuranceNumber = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    companyName = models.CharField(max_length=255)
+    activity = models.CharField(max_length=1023)
+    siretNumber = models.IntegerField(null=True)
+    tradeRegisterNumber = models.CharField(max_length=255)
 
     def boatList(self):
         """
