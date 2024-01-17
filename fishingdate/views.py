@@ -8,7 +8,6 @@ from .models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
 from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer, DateTimeExcursionSerializer
 
 
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -21,7 +20,7 @@ class UserViewSet(viewsets.ModelViewSet):
         
         return queryset
 
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class BoatViewSet(viewsets.ModelViewSet):
@@ -42,7 +41,7 @@ class BoatViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(latitude__range=(latitude1, latitude2))
         return queryset
     
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         owner_id = request.data.get('user')
@@ -73,7 +72,7 @@ class ExcursionViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(excursionType=excursionType)
         return queryset
     
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         boat_owner_id = request.data.get('user')
@@ -104,7 +103,8 @@ class BookingViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(idExcursion=idExcursion)
         return queryset
     
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
 
 class NotebookViewSet(viewsets.ModelViewSet):
     queryset = Notebook.objects.all()
@@ -117,9 +117,10 @@ class NotebookViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(weight=weight)
         return queryset
     
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
 
 class DateTimeListViewSet(viewsets.ModelViewSet):
     queryset = DateTimeExcursion.objects.all()
     serializer_class = DateTimeExcursionSerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
