@@ -70,15 +70,12 @@ class BoatViewSet(viewsets.ModelViewSet):
         """
         queryset = Boat.objects.all()
         name = self.request.GET.get('name')
-
         if name is not None:
             queryset = queryset.filter(name=name)
-
         longitude1 = self.request.GET.get('longitude1')
         longitude2 = self.request.GET.get('longitude2')
         latitude1 = self.request.GET.get('latitude1')
         latitude2 = self.request.GET.get('latitude2')
-
         if longitude1 is not None and longitude2 is not None and latitude1 is not None and latitude2 is not None:
             queryset = queryset.filter(longitude__range=(longitude1, longitude2))
             queryset = queryset.filter(latitude__range=(latitude1, latitude2))
@@ -86,6 +83,11 @@ class BoatViewSet(viewsets.ModelViewSet):
             raise serializers.ValidationError(
                 {'error': 'two point is require for the bounding box'}
             )
+        if (longitude1 is not None and not (-180 <= float(longitude1) <= 180)) or \
+            (longitude2 is not None and not (-180 <= float(longitude2) <= 180)) or \
+            (latitude1 is not None and not (-90 <= float(latitude1) <= 90)) or \
+            (latitude2 is not None and not (-90 <= float(latitude2) <= 90)):
+            raise serializers.ValidationError({'error': 'Out of bounds exception'})
         return queryset
     
     #permission_classes = [IsAuthenticated]
