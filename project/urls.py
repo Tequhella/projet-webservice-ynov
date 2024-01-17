@@ -20,3 +20,11 @@ urlpatterns = [
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
     path('api/v1/', include(router.urls)),
 ]
+
+# Django URL Configuration
+# This file defines the URL patterns for the project.
+# It includes the necessary imports and sets up the router for API endpoints.
+# The urlpatterns list contains the paths for various URLs, including admin, authentication, and API endpoints.
+# Each path is associated with a specific view or viewset.
+# The TokenObtainPairView and TokenRefreshView are used for JWT token-based authentication.
+# The router registers the viewsets for the API endpoints.
