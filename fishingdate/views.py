@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import User, Notebook, Boat, Excursion, Booking, DateTimeExcursion
 from .serializers import UserSerializer, NotebookSerializer, BoatSerializer, ExcursionSerializer, BookingSerializer, DateTimeExcursionSerializer
-
+from rest_framework import serializers
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -70,18 +70,25 @@ class BoatViewSet(viewsets.ModelViewSet):
         """
         queryset = Boat.objects.all()
         name = self.request.GET.get('name')
+
         if name is not None:
             queryset = queryset.filter(name=name)
+
         longitude1 = self.request.GET.get('longitude1')
         longitude2 = self.request.GET.get('longitude2')
         latitude1 = self.request.GET.get('latitude1')
         latitude2 = self.request.GET.get('latitude2')
-        if longitude1 is not None and longitude2 is not None and latitude1 is not None and latitude2 is not None :
+
+        if longitude1 is not None and longitude2 is not None and latitude1 is not None and latitude2 is not None:
             queryset = queryset.filter(longitude__range=(longitude1, longitude2))
             queryset = queryset.filter(latitude__range=(latitude1, latitude2))
+        elif longitude1 is not None or longitude2 is not None or latitude1 is not None or latitude2 is not None:
+            raise serializers.ValidationError(
+                {'error': 'two point is require for the bounding box'}
+            )
         return queryset
     
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """
