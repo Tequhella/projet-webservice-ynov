@@ -38,7 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
         
         return queryset
 
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 
 class BoatViewSet(viewsets.ModelViewSet):
@@ -81,7 +81,7 @@ class BoatViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(latitude__range=(latitude1, latitude2))
         elif longitude1 is not None or longitude2 is not None or latitude1 is not None or latitude2 is not None:
             raise serializers.ValidationError(
-                {'error': 'two point is require for the bounding box'}
+                {'error': 'two points are required for the bounding box'}
             )
         if (longitude1 is not None and not (-180 <= float(longitude1) <= 180)) or \
             (longitude2 is not None and not (-180 <= float(longitude2) <= 180)) or \
@@ -148,7 +148,7 @@ class ExcursionViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(excursionType=excursionType)
         return queryset
     
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         """
@@ -207,7 +207,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(idExcursion=idExcursion)
         return queryset
     
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 
 class NotebookViewSet(viewsets.ModelViewSet):
